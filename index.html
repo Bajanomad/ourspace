@@ -405,6 +405,17 @@ html,body{overflow-x:hidden}
 .profile-cols{grid-template-columns:1fr}
 .col-media{position:static;max-height:none;overflow:visible}
 img,iframe,video{max-width:100%}
+
+/* ============================================================
+   v8 GATE PINNED (David's order): the entry screen with the
+   big space border and the tile dead center is locked to the
+   screen, exactly the same distance from the top as from the
+   bottom, on any device. No bounce, no rubber band, no scroll
+   on the gate. The word is responsive: it fits whatever
+   screen opens it. Gate look stays exactly as he loves it.
+   ============================================================ */
+html,body{overscroll-behavior:none}
+#gateView{position:fixed;inset:0;height:auto;min-height:0;overflow:hidden;z-index:60;padding:16px 12px}
 </style>
 </head>
 <body>

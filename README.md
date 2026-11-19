@@ -193,3 +193,11 @@ pipe separated nav, and the extended network banner (rewritten here as
   columns stack in order (identity, talk, media), and the scroll
   parallax came out; the backdrop is locked with only its slow
   star drift left in.
+- 2026-11-18: v8 pins the gate. David loved the entry screen as
+  it is (the big space border, the smaller tile dead center,
+  imaging, color, text, font, rounded corners; his words, he
+  fucking loves it) but it rubber banded when touched: the page
+  was a hair taller than his screen, so iOS let it bounce. The
+  gate is now fixed to the screen itself, exactly centered top
+  to bottom, no scroll, no bounce, and it auto fits any device
+  (responsive). The gate look did not change at all.
