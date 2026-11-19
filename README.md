@@ -148,3 +148,13 @@ pipe separated nav, and the extended network banner (rewritten here as
   localStorage persistence (now one versioned state key instead of
   three separate keys).
 - 2026-11-18 (deployment note): GitHub Pages serves this from the repo root. The push tooling moves text files only, so in the deployed copy the three placeholder songs are inlined into index.html as data URIs; the music/ folder in the source workspace remains the canonical audio for a future host.
+- 2026-11-18: v3 adds the Themes button and the code boxes, at David's
+  order, informed by the MySpace revival scene (SpaceHey, Neocities):
+  a one-tap theme gallery in the profile editor (Classic, Matrix,
+  Harley, Glitter, Celestial for planets and moons, Ocean Life,
+  Flowers, Birds and Sky, Vapor Sunset, Retro PC, Baja Desert,
+  Midnight), plus per-member Custom CSS, a Custom HTML section box,
+  and a Custom JavaScript box, the old MySpace paste-in code model
+  cleaned up. Themes and code live in the member's saved edits, so a
+  theme picked once sticks. Custom code runs only in this browser
+  demo; a hosted version would sanitize it the way SpaceHey does.
