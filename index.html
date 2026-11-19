@@ -206,6 +206,53 @@ input[type=text],input[type=password],textarea,select{border-radius:10px}
 }
 #feedView .box,#membersView .box{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 
+/* ============================================================
+   v5 MODERN SYSTEM: the MySpace soul (your page, your song,
+   your wall, your code) in a 21st century body. Big clean
+   glass cards, soft dividers instead of cell paint, generous
+   spacing, large type, parallax star layers over the vista.
+   The word is intuitive: nobody needs it explained.
+   ============================================================ */
+#spaceBg{transform:scale(1.08)}
+#stars1,#stars2{position:fixed;inset:-80px 0;z-index:0;pointer-events:none;background-repeat:repeat;will-change:transform}
+#stars1{background-image:radial-gradient(1px 1px at 30px 40px,rgba(255,255,255,.9) 50%,transparent 52%),radial-gradient(1px 1px at 130px 90px,rgba(200,220,255,.7) 50%,transparent 52%),radial-gradient(1px 1px at 210px 160px,rgba(255,255,255,.8) 50%,transparent 52%);background-size:260px 200px;opacity:.5;animation:drift 140s linear infinite alternate}
+#stars2{background-image:radial-gradient(2px 2px at 60px 70px,rgba(255,255,255,.95) 50%,transparent 52%),radial-gradient(1px 1px at 300px 200px,rgba(255,240,200,.85) 50%,transparent 52%),radial-gradient(2px 2px at 180px 260px,rgba(190,215,255,.8) 50%,transparent 52%);background-size:420px 320px;opacity:.75;animation:drift 90s linear infinite alternate-reverse}
+@keyframes drift{from{background-position:0 0}to{background-position:120px 60px}}
+#appView .themed{font-size:13px}
+.box{border-radius:20px;box-shadow:0 12px 32px rgba(0,0,0,.30);margin-bottom:18px}
+.box .bar{padding:10px 14px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase}
+.box .body{padding:12px 14px;line-height:1.65}
+.btn{padding:7px 18px;font-size:12px}
+.btn.small{padding:4px 12px}
+input[type=text],input[type=password],textarea,select{padding:8px 10px;font-size:12px}
+.profile-cols{gap:18px}
+.profile-name{font-size:30px;margin-bottom:10px}
+.profile-photo{border-radius:20px;box-shadow:0 10px 26px rgba(0,0,0,.35)}
+table.info th,table.info td{padding:8px 10px;font-size:12px;border-bottom:1px solid var(--border);border-bottom:1px solid color-mix(in srgb,var(--border) 30%,transparent)}
+table.info th{background:transparent;width:112px}
+table.info td{background:transparent}
+table.info tr:last-child th,table.info tr:last-child td{border-bottom:none}
+.contact-grid{gap:6px 12px;padding:10px 14px}
+.contact-grid a{font-size:12px;padding:4px 0}
+.url-box{border-radius:14px;padding:10px 12px;margin-bottom:18px}
+.network-banner{border-radius:14px;padding:12px 8px;margin-bottom:18px}
+.blurb-head{font-size:13px;padding:10px 14px 0}
+.blurb{padding:4px 14px 12px;font-size:13px}
+.latest-row{padding:6px 0}
+.gallery-grid{gap:8px;padding:12px}
+.gallery-grid img{height:110px;border-radius:12px;border:none}
+.top-grid{padding:12px;gap:12px 8px}
+.friend .avatar{border-radius:18px}
+.wall-row{grid-template-columns:112px minmax(0,1fr)}
+.wall-row .w-who{background:transparent;padding:10px}
+.wall-row .w-who .avatar{border-radius:14px}
+.wall-row .w-body{padding:10px 12px}
+.edit-panel{border-radius:16px;padding:14px}
+.post .p-head{padding:8px 12px}
+.post .p-body{padding:10px 14px}
+.theme-card{border-radius:12px;overflow:hidden}
+.gate-card{border-radius:28px}
+
 /* ===== feed view ===== */
 #feedView{padding:12px 6px 4px}
 .composer .tabs{display:flex;gap:4px;padding:6px 8px 0}
@@ -333,6 +380,8 @@ table.info td{background:var(--cellbg)}
 </head>
 <body>
 <div id="spaceBg"></div>
+<div id="stars1"></div>
+<div id="stars2"></div>
 
 <!-- ================= INVITE GATE ================= -->
 <div id="gateView">
@@ -1365,6 +1414,24 @@ $("codeSaveBtn").addEventListener("click", function(){
   saveState();
   renderProfile(id);
 });
+
+/* ================= PARALLAX ================= */
+(function(){
+  var bg = $("spaceBg"), s1 = $("stars1"), s2 = $("stars2");
+  if(!bg) return;
+  var ticking = false;
+  function apply(){
+    var y = window.scrollY || 0;
+    bg.style.transform = "scale(1.08) translateY(" + (-y * 0.03) + "px)";
+    if(s1) s1.style.transform = "translateY(" + (-y * 0.08) + "px)";
+    if(s2) s2.style.transform = "translateY(" + (-y * 0.16) + "px)";
+    ticking = false;
+  }
+  window.addEventListener("scroll", function(){
+    if(!ticking){ ticking = true; requestAnimationFrame(apply); }
+  }, {passive:true});
+  apply();
+})();
 
 /* ================= INIT ================= */
 (function(){

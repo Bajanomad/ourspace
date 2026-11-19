@@ -168,3 +168,12 @@ pipe separated nav, and the extended network banner (rewritten here as
   display, Space Grotesk body). The MySpace layout system and all v3
   features stay underneath, and member profiles keep their own
   themes: the space shell is the site's skin, not theirs.
+- 2026-11-18: v5 is the modernization pass, at David's order after
+  he looked at the real MySpace on the Wayback Machine and called
+  it ghetto and ugly (his words): keep the functionality and the
+  customizability, lose the 2005 chrome. Big clean glass cards with
+  soft shadows, section bars as quiet uppercase headers, info
+  tables as clean rows with soft dividers instead of painted
+  cells, larger type and tap targets everywhere, and parallax:
+  two star layers plus the vista itself drift at different rates
+  over the scroll. The word David was reaching for is intuitive.
