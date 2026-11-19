@@ -393,6 +393,18 @@ table.info td{background:var(--cellbg)}
   .profile-cols{grid-template-columns:1fr}
   .col-media{position:static;max-height:none;overflow:visible}
 }
+
+/* ============================================================
+   v7 PHONE AND TABLET BUILD (David's call, for now): one
+   centered column, anchored. Nothing pans sideways, nothing
+   drifts under your thumb; the page scrolls up and down and
+   that is all. Desktop fitting comes later.
+   ============================================================ */
+html,body{overflow-x:hidden}
+.wrap{width:100%;max-width:720px;margin:0 auto;padding-left:10px;padding-right:10px}
+.profile-cols{grid-template-columns:1fr}
+.col-media{position:static;max-height:none;overflow:visible}
+img,iframe,video{max-width:100%}
 </style>
 </head>
 <body>
@@ -1453,22 +1465,12 @@ $("codeSaveBtn").addEventListener("click", function(){
   renderProfile(id);
 });
 
-/* ================= PARALLAX ================= */
+/* ================= BACKDROP (anchored, v7) =================
+   The vista and star layers stay locked in place; only their
+   slow CSS drift animation moves, never the scroll. */
 (function(){
-  var bg = $("spaceBg"), s1 = $("stars1"), s2 = $("stars2");
-  if(!bg) return;
-  var ticking = false;
-  function apply(){
-    var y = window.scrollY || 0;
-    bg.style.transform = "scale(1.08) translateY(" + (-y * 0.03) + "px)";
-    if(s1) s1.style.transform = "translateY(" + (-y * 0.08) + "px)";
-    if(s2) s2.style.transform = "translateY(" + (-y * 0.16) + "px)";
-    ticking = false;
-  }
-  window.addEventListener("scroll", function(){
-    if(!ticking){ ticking = true; requestAnimationFrame(apply); }
-  }, {passive:true});
-  apply();
+  var bg = $("spaceBg");
+  if(bg) bg.style.transform = "scale(1.08)";
 })();
 
 /* ================= INIT ================= */

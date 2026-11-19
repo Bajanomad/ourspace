@@ -185,3 +185,11 @@ pipe separated nav, and the extended network banner (rewritten here as
   right the media rail, his doom scroll bar: profile song,
   featured video and photos in their own sticky scrolling column.
   The page widens to 1180px to hold it; on a phone it stacks.
+- 2026-11-18: v7 anchors it, at David's order: the wide layout
+  could be pushed around sideways on his phone and it was not
+  sitting in the middle. This is a phone and tablet build for
+  now (desktop fitting later, his roadmap): one centered column
+  capped at 720px, horizontal movement locked, the three profile
+  columns stack in order (identity, talk, media), and the scroll
+  parallax came out; the backdrop is locked with only its slow
+  star drift left in.
