@@ -223,3 +223,15 @@ pipe separated nav, and the extended network banner (rewritten here as
   land there soon; for now, cool is the password. Built on the
   v8 keeper source (restored from the v8 build; the v9 source
   is archived as index-v9-source-archive.html).
+- 2026-11-19: v11 is the team roster, David's order. The people
+  on OurSpace are the people who will actually use it: the
+  Section 13 team (David, Motoko, Batou, Togusa, plus Rook,
+  Vela, Sable and Patch, an invented bench in the same spirit)
+  and two real friends, Miles and Scott, who David will show
+  this to. Ten profiles with real portrait pictures, blurbs,
+  galleries, seeded posts and full comment walls. Glenn, Susan
+  and the open seats are retired. ALL music is pulled (songs
+  off everywhere, the song box hides); embedded YouTube music
+  players are the later plan. Saved state resets to the new
+  roster (storage key v3). Miles and Scott portraits are
+  generated stand-ins until the real men hand over photos.
