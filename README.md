@@ -158,3 +158,13 @@ pipe separated nav, and the extended network banner (rewritten here as
   cleaned up. Themes and code live in the member's saved edits, so a
   theme picked once sticks. Custom code runs only in this browser
   demo; a hosted version would sanitize it the way SpaceHey does.
+- 2026-11-18: v4 is the space reskin, at David's order ("make it
+  beautiful, make it sexy, start with the outer space thing"): the
+  whole site shell now lives in deep space. A generated galaxy vista
+  (spiral galaxy, ringed planet, two moons, nebula clouds) sits fixed
+  behind everything; the invite gate is one big frosted glass tile
+  floating in it; header, nav and the feed/members chrome are dark
+  glass with rounded edges, glass buttons and sci fi type (Orbitron
+  display, Space Grotesk body). The MySpace layout system and all v3
+  features stay underneath, and member profiles keep their own
+  themes: the space shell is the site's skin, not theirs.
