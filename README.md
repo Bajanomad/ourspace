@@ -214,3 +214,12 @@ pipe separated nav, and the extended network banner (rewritten here as
   shell throughout, gate pinned, his song in place). The v9
   whole-site theming build stays in the repo history as
   v9.html only; v8 is the keeper unless he says otherwise.
+- 2026-11-18: v10 unlocks the gate, David's order. The login
+  will become username + code later; where the code input sat,
+  the middle bar is now a fun COOL bar: tap it, it fills with a
+  green to blue to orange sweep while it "proves" you (Proving
+  it, Sunglasses detected, Ice cold, come in) and opens the
+  door. Small print on the gate says username and code logins
+  land there soon; for now, cool is the password. Built on the
+  v8 keeper source (restored from the v8 build; the v9 source
+  is archived as index-v9-source-archive.html).
