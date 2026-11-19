@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>David | davidspace</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================= TOP BAR (classic MySpace style) ================= -->
+<header class="site-head">
+  <div class="head-inner">
+    <div class="logo">david<span>space</span></div>
+    <div class="head-tag">a place for friends</div>
+    <div class="head-links"><a href="#">SignUp</a> | <a href="#">Help</a> | <a href="#">LogIn</a></div>
+  </div>
+  <nav class="site-nav">
+    <a href="#">Home</a> | <a href="#">Browse</a> | <a href="#">Search</a> | <a href="#">Invite</a> |
+    <a href="#">Film</a> | <a href="#">Mail</a> | <a href="#">Blog</a> | <a href="#">Favorites</a> |
+    <a href="#">Forum</a> | <a href="#">Groups</a> | <a href="#">Events</a> | <a href="#">Video</a> |
+    <a href="#">Music</a> | <a href="#">Classifieds</a>
+  </nav>
+</header>
+
+<div class="page">
+
+  <!-- ================= LEFT COLUMN ================= -->
+  <div class="col-left">
+
+    <!-- Background info: name, photo, headline, basics -->
+    <div class="box plain">
+      <h1 class="profile-name">David</h1>
+      <div class="id-row">
+        <div class="photo-col">
+          <div class="profile-photo" aria-label="David's profile photo">D</div>
+          <div class="view-my">View My: <a href="#">Pics</a> | <a href="#">Videos</a></div>
+        </div>
+        <div class="id-text">
+          <p class="headline" id="headlineText"></p>
+          <p>Male</p>
+          <p>Pescadero, Baja California Sur</p>
+          <p>Mexico</p>
+          <p class="last-login">Last Login: <span id="lastLogin"></span></p>
+          <p class="mood-line">Mood: <span id="moodText"></span> <span id="moodFace"></span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contacting -->
+    <div class="box">
+      <h2>Contacting David</h2>
+      <div class="contact-grid">
+        <a href="#comments">&#9993; Send Message</a>
+        <a href="#friends">&#43; Add to Friends</a>
+        <a href="#comments">&#9998; Instant Message</a>
+        <a href="#friends">&#9829; Add to Favorites</a>
+        <a href="#">&#10148; Forward to Friend</a>
+        <a href="#friends">&#9787; Add to Group</a>
+        <a href="#">&#8856; Block User</a>
+        <a href="#friends">&#9733; Rank User</a>
+      </div>
+    </div>
+
+    <!-- Interests -->
+    <div class="box">
+      <h2>David's Interests</h2>
+      <table class="info-table">
+        <tr><th>General</th><td>Off-grid living, desert roads, beach towns, the old internet, new ideas, keeping good people close.</td></tr>
+        <tr><th>Music</th><td>Corridos, old school hip hop, metal, dark electronic. Loud, the way it was meant to be played.</td></tr>
+        <tr><th>Movies</th><td>Ghost in the Shell. Anything with a desert, a long road, and no easy answers.</td></tr>
+        <tr><th>Television</th><td>Mostly off. The sky over Baja puts on a better show most nights.</td></tr>
+        <tr><th>Books</th><td>Paper ones, found in strange places, with somebody else's notes in the margins.</td></tr>
+        <tr><th>Heroes</th><td>People who build their own corner of the world and then share it.</td></tr>
+      </table>
+    </div>
+
+    <!-- Details -->
+    <div class="box">
+      <h2>David's Details</h2>
+      <table class="info-table">
+        <tr><th>Here for:</th><td>Friends, keeping in touch</td></tr>
+        <tr><th>Hometown:</th><td>Chicago, Miami, San Diego (former lives)</td></tr>
+        <tr><th>Now living:</th><td>Pescadero, Baja California Sur, Mexico</td></tr>
+        <tr><th>Occupation:</th><td>Web design and development</td></tr>
+        <tr><th>Member since:</th><td>November 2026 (and 2006, in spirit)</td></tr>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- ================= RIGHT COLUMN ================= -->
+  <div class="col-right">
+
+    <div class="network-banner">David is in your extended network.</div>
+
+    <!-- Blurbs -->
+    <div class="box">
+      <h2>David's Blurbs</h2>
+      <h3 class="blurb-head">About me:</h3>
+      <p class="blurb" id="aboutText"></p>
+      <h3 class="blurb-head">Who I'd like to meet:</h3>
+      <p class="blurb" id="meetText"></p>
+    </div>
+
+    <!-- Bulletins / blog -->
+    <div class="box" id="bulletins">
+      <h2>David's Latest Bulletins</h2>
+      <div id="bulletinList"></div>
+      <form id="bulletinForm" class="owner-only hidden">
+        <div class="form-title">Post a new bulletin (goes out to all friends):</div>
+        <input type="text" id="bulletinSubject" placeholder="Subject" maxlength="90">
+        <textarea id="bulletinBody" rows="3" placeholder="What is the word?"></textarea>
+        <button type="submit" class="btn">Post Bulletin</button>
+      </form>
+    </div>
+
+    <!-- Friend Space -->
+    <div class="box" id="friends">
+      <h2>David's Friend Space</h2>
+      <p class="friend-count">David has <b id="friendCount"></b> friends.</p>
+      <div class="top8-title">David's Top 8:</div>
+      <div class="top8-grid" id="top8Grid"></div>
+      <p class="view-all"><a href="#" id="viewAllFriends">View All of David's Friends</a></p>
+      <div id="allFriends" class="hidden">
+        <div class="top8-title">All Friends:</div>
+        <div id="friendList"></div>
+      </div>
+    </div>
+
+    <!-- Comments -->
+    <div class="box" id="comments">
+      <h2>David's Friends Comments</h2>
+      <p class="comment-count">Displaying <b id="commentCount"></b> comments</p>
+      <div id="commentList"></div>
+      <form id="commentForm" class="comment-form">
+        <div class="form-title">Add a Comment:</div>
+        <input type="text" id="commentName" placeholder="Your name" maxlength="40">
+        <textarea id="commentText" rows="3" placeholder="Leave some love..."></textarea>
+        <button type="submit" class="btn">Post Comment</button>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= OWNER BAR ================= -->
+<footer class="owner-bar">
+  <div id="ownerLocked">
+    Profile owner?
+    <input type="password" id="ownerPw" placeholder="Owner password" aria-label="Owner password">
+    <button class="btn small" id="ownerUnlock">Unlock editing</button>
+    <span class="owner-hint">Demo password: <b>davidspace2026</b> (client-side demo gate, same pattern as the family site)</span>
+    <span class="err" id="ownerErr"></span>
+  </div>
+  <div id="ownerOpen" class="hidden">
+    <b>Owner mode is on.</b> You can edit the headline, mood and blurbs, post bulletins, and delete comments.
+    <button class="btn small" id="showEdit">Edit Profile</button>
+    <button class="btn small" id="ownerLock">Lock</button>
+    <form id="editForm" class="hidden">
+      <label>Headline <input type="text" id="editHeadline" maxlength="90"></label>
+      <label>Mood <input type="text" id="editMood" maxlength="30"></label>
+      <label>Mood face
+        <select id="editMoodFace">
+          <option>:)</option><option>:D</option><option>;)</option><option>:P</option>
+          <option>:|</option><option>:(</option><option>B)</option><option>o_O</option>
+        </select>
+      </label>
+      <label>About me <textarea id="editAbout" rows="4"></textarea></label>
+      <label>Who I'd like to meet <textarea id="editMeet" rows="3"></textarea></label>
+      <button type="submit" class="btn">Save Profile</button>
+    </form>
+  </div>
+  <p class="foot-note">davidspace: a personal tribute to the classic MySpace profile, rebuilt by hand. Not affiliated with MySpace. No ads, no algorithm, no strangers. Just us.</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

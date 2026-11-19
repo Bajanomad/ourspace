@@ -1,0 +1,121 @@
+/* davidspace: classic MySpace profile theme (2005-2008 default look), kept clean.
+   Blue bars, orange blurb heads, tiny Verdana, tables for interests and details. */
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Verdana,Arial,Helvetica,sans-serif;font-size:12px;color:#000;background:#e5e5e5}
+a{color:#003399;text-decoration:none}
+a:hover{text-decoration:underline;color:#ff6600}
+.hidden{display:none !important}
+button{font-family:inherit;cursor:pointer}
+
+/* ===== top bar ===== */
+.site-head{background:#003399;color:#fff}
+.head-inner{max-width:900px;margin:0 auto;display:flex;align-items:baseline;gap:14px;padding:8px 10px 4px}
+.logo{font-size:30px;font-weight:bold;font-style:italic;letter-spacing:-1px;color:#fff}
+.logo span{color:#99ccff}
+.head-tag{font-size:11px;color:#ccddff}
+.head-links{margin-left:auto;font-size:11px}
+.head-links a{color:#fff}
+.site-nav{max-width:900px;margin:0 auto;padding:5px 10px 8px;font-size:11px;color:#99ccff}
+.site-nav a{color:#fff}
+
+/* ===== page frame ===== */
+.page{max-width:900px;margin:0 auto;background:#fff;border-left:1px solid #999;border-right:1px solid #999;
+  display:grid;grid-template-columns:305px minmax(0,1fr);gap:14px;padding:12px 12px 20px}
+.col-left,.col-right{display:flex;flex-direction:column;gap:14px;min-width:0}
+
+/* ===== boxes ===== */
+.box{border:1px solid #003399;background:#fff}
+.box.plain{border:none}
+.box h2{background:#b1d0f0;color:#003399;font-size:12px;font-weight:bold;padding:4px 8px;border-bottom:1px solid #003399}
+.box > p,.box > div{padding:6px 8px}
+
+/* ===== identity block ===== */
+.profile-name{font-size:20px;font-weight:bold;margin-bottom:8px}
+.id-row{display:flex;gap:10px}
+.photo-col{flex:none;text-align:center;width:150px}
+.profile-photo{width:150px;height:150px;background:linear-gradient(150deg,#3366cc 0%,#003399 60%,#001a4d 100%);
+  color:#fff;font-size:74px;font-weight:bold;display:flex;align-items:center;justify-content:center;border:1px solid #003399}
+.view-my{margin-top:5px;font-size:11px}
+.id-text p{margin-bottom:3px;line-height:1.45}
+.headline{font-weight:bold}
+.last-login{margin-top:10px}
+.mood-line{font-weight:bold}
+
+/* ===== contact box ===== */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px 10px;padding:8px}
+.contact-grid a{font-size:11px;padding:2px 0}
+
+/* ===== interests + details tables ===== */
+.info-table{width:100%;border-collapse:collapse}
+.info-table th,.info-table td{padding:4px 6px;vertical-align:top;text-align:left;border-bottom:1px solid #fff;line-height:1.5}
+.info-table th{background:#d5e8fb;color:#003399;font-weight:bold;width:86px;font-size:11px}
+.info-table td{background:#fff;font-size:11px}
+
+/* ===== right column ===== */
+.network-banner{border:1px solid #003399;background:#fff;text-align:center;font-weight:bold;padding:10px 6px;font-size:12px}
+.blurb-head{color:#ff6600;font-size:12px;font-weight:bold;padding:8px 8px 0}
+.blurb{padding:2px 8px 8px;line-height:1.6}
+
+/* ===== bulletins ===== */
+.bulletin{border-bottom:1px dotted #999;padding:7px 8px}
+.bulletin:last-child{border-bottom:none}
+.bulletin .b-subj{font-weight:bold;color:#003399}
+.bulletin .b-date{color:#666;font-size:10px}
+.bulletin .b-body{line-height:1.6;margin-top:3px;white-space:pre-wrap}
+.bulletin .del{float:right;font-size:10px}
+
+/* ===== friends ===== */
+.friend-count{padding-bottom:0}
+.top8-title{font-weight:bold;padding-bottom:2px}
+.top8-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px 6px;padding-top:2px}
+.friend{text-align:center}
+.friend .fphoto{width:90px;height:90px;margin:0 auto 3px;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:30px;font-weight:bold;border:1px solid #003399}
+.friend .fname{font-size:11px;font-weight:bold}
+.friend .floc{font-size:10px;color:#666}
+.friend.open .fphoto{background:#f2f2f2;color:#999;border:1px dashed #999;font-size:12px;font-weight:normal;padding:6px}
+.friend.open .fname{color:#666}
+.view-all{text-align:right}
+.friend-row{display:flex;align-items:center;gap:9px;padding:5px 8px;border-bottom:1px dotted #ccc}
+.friend-row:last-child{border-bottom:none}
+.friend-row .fphoto-sm{width:36px;height:36px;flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;border:1px solid #003399}
+.friend-row .fn{font-weight:bold}
+.friend-row .fl{color:#666;font-size:10px}
+
+/* ===== comments ===== */
+.comment-count{padding-bottom:0}
+.comment{display:grid;grid-template-columns:110px minmax(0,1fr);border-top:1px solid #b1d0f0}
+.comment .c-who{background:#d5e8fb;padding:7px;text-align:center}
+.comment .c-who .fphoto{width:70px;height:70px;margin:0 auto 3px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;font-weight:bold;border:1px solid #003399}
+.comment .c-who .fname{font-size:11px;font-weight:bold}
+.comment .c-body{padding:7px 9px;line-height:1.6;white-space:pre-wrap}
+.comment .c-date{color:#666;font-size:10px;margin-bottom:3px}
+.comment .del{float:right;font-size:10px}
+
+/* ===== forms ===== */
+.comment-form,.owner-only{border-top:1px solid #b1d0f0;padding:8px}
+.form-title{font-weight:bold;color:#ff6600;margin-bottom:6px}
+input[type=text],input[type=password],textarea,select{width:100%;font-family:inherit;font-size:12px;
+  border:1px solid #999;padding:5px 6px;margin-bottom:6px;background:#fff}
+.btn{background:#003399;color:#fff;border:1px solid #001a4d;padding:5px 14px;font-size:12px;font-weight:bold}
+.btn:hover{background:#ff6600}
+.btn.small{padding:3px 10px;font-size:11px}
+
+/* ===== owner bar ===== */
+.owner-bar{max-width:900px;margin:0 auto;background:#fff;border:1px solid #999;border-top:none;padding:10px 12px 16px}
+.owner-bar input[type=password]{width:170px;display:inline-block;margin:0 6px 0 8px}
+.owner-hint{color:#666;font-size:10px;margin-left:8px}
+.err{color:#c00;font-weight:bold;margin-left:8px}
+#editForm{margin-top:10px;border-top:1px dotted #999;padding-top:10px}
+#editForm label{display:block;font-weight:bold;color:#003399;margin-bottom:8px}
+#editForm input,#editForm textarea,#editForm select{margin-top:3px;font-weight:normal;color:#000}
+.shake{animation:shake .45s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+.foot-note{margin-top:12px;color:#666;font-size:10px;text-align:center;line-height:1.6}
+
+@media (max-width:760px){
+  .page{grid-template-columns:1fr}
+  .top8-grid{grid-template-columns:repeat(2,1fr)}
+  .comment{grid-template-columns:84px minmax(0,1fr)}
+}
