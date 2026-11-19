@@ -427,6 +427,13 @@ html,body{overscroll-behavior:none}
 .cool-bar .fill{position:absolute;inset:0;width:0%;background:linear-gradient(90deg,#39ff14,#00c2ff,#ff6a00);opacity:.85;transition:width .35s ease}
 .cool-bar .txt{position:relative;z-index:1;text-shadow:0 1px 8px rgba(0,0,0,.65)}
 @keyframes coolPulse{0%,100%{box-shadow:0 0 0 rgba(57,255,20,0)}50%{box-shadow:0 0 22px rgba(57,255,20,.45)}}
+.gate-auth{margin-top:14px}
+.gate-auth-tabs{display:flex;gap:8px;justify-content:center;margin-bottom:8px}
+.gate-auth input{width:100%;margin:4px 0}
+.admin-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.admin-who{display:flex;align-items:center;gap:8px;text-align:left}
+.admin-row .avatar{width:34px;height:34px;font-size:13px;flex:none}
+.admin-btns{white-space:nowrap}
 .avatar{overflow:hidden}
 .avatar img{width:100%;height:100%;object-fit:cover;display:block}
 </style>
@@ -444,7 +451,28 @@ html,body{overscroll-behavior:none}
     <p><b>Invite only. Members only.</b></p>
     <p>This is a closed little network for a small circle of friends and family. No strangers, no ads, no algorithm. Logins here will be a username and a code. Until then, the door opens for the cool.</p>
     <button type="button" class="cool-bar" id="coolBar"><span class="fill" id="coolFill"></span><span class="txt" id="coolTxt">ARE YOU COOL?</span></button>
-    <div class="gate-hint">Username and code logins land here soon.<br>For now, cool is the password.</div>
+    <div class="gate-hint">Members sign in below. New here? Sign up with just a username and a password.<br>Or tap the cool bar and look around first.</div>
+    <div class="gate-auth">
+      <div class="gate-auth-tabs">
+        <button type="button" class="btn small" id="showSignIn">Sign In</button>
+        <button type="button" class="btn small" id="showSignUp">Sign Up</button>
+      </div>
+      <div id="signInBox" class="hidden">
+        <input type="text" id="siUser" placeholder="Username" autocomplete="username">
+        <input type="password" id="siPass" placeholder="Password" autocomplete="current-password">
+        <div class="err" id="siErr"></div>
+        <button type="button" class="btn" id="siGo">Sign In</button>
+        <p class="custom-note">Team profiles start with no password: sign in with your username and the password you type becomes yours.</p>
+      </div>
+      <div id="signUpBox" class="hidden">
+        <input type="text" id="suUser" placeholder="Pick a username">
+        <input type="text" id="suName" placeholder="Your display name">
+        <input type="password" id="suPass" placeholder="Pick a password">
+        <div class="err" id="suErr"></div>
+        <button type="button" class="btn" id="suGo">Create My Account</button>
+        <p class="custom-note">That is all we ask. No email, no phone, nothing else.</p>
+      </div>
+    </div>
   </form>
 </div>
 
@@ -480,6 +508,7 @@ html,body{overscroll-behavior:none}
       <a href="#" data-nav="profile" data-self="1">My Profile</a> |
       <a href="#" data-nav="feed">Feed</a> |
       <a href="#" data-nav="members">Invite</a> |
+      <a href="#" data-nav="admin" id="navAdmin" class="hidden">Admin</a> |
       <a href="#" id="navHelp2">Help</a>
     </div>
   </nav>
@@ -544,6 +573,24 @@ html,body{overscroll-behavior:none}
         <div class="body">Everybody here was invited by somebody here. That is the whole list. Click anyone to see their page, each one built from the same template and then made their own.</div>
       </div>
       <div class="member-grid themed theme-classic" id="memberGrid"></div>
+    </section>
+
+    <!-- ========== ADMIN VIEW ========== -->
+    <section id="adminView" class="hidden">
+      <div class="box themed theme-classic">
+        <div class="bar">Admin Panel</div>
+        <div class="body">
+          <p><b>Accounts.</b> Create accounts, act as a member, set passwords, delete. Deleting a member removes their posts, wall and comments too. Demo rules: passwords live in this browser only until the database lands.</p>
+          <div id="adminAccounts"></div>
+          <p style="margin-top:12px"><b>Create an account</b></p>
+          <input type="text" id="adUser" placeholder="Username">
+          <input type="text" id="adName" placeholder="Display name">
+          <input type="text" id="adPass" placeholder="Password">
+          <div style="margin-top:6px"><button type="button" class="btn" id="adCreate">Create Account</button></div>
+          <p style="margin-top:14px"><b>All posts</b></p>
+          <div id="adminPosts"></div>
+        </div>
+      </div>
     </section>
 
     <!-- ========== PROFILE VIEW (the one standard template) ========== -->
@@ -723,7 +770,7 @@ html,body{overscroll-behavior:none}
    only a layer of colors, fonts, motifs and a song over it.
    ============================================================ */
 var INVITE_CODE = "ourspace2026";
-var LS_KEY = "ourspace.v3.state";
+var LS_KEY = "ourspace.v4.state";
 var SS_GATE = "ourspace.gate";
 
 /* ================= MEMBERS ================= */
@@ -1066,7 +1113,21 @@ function seedState(){
         {authorId:"miles", text:"Told you he would build you a page before you asked. Pay up, the man is predictable.", ts:now - 25*H}
       ]
     },
-    edits:{}
+    edits:{},
+    customMembers:[],
+    deletedIds:[],
+    accounts:[
+      {username:"david", memberId:"david", pass:null},
+      {username:"motoko", memberId:"motoko", pass:null},
+      {username:"batou", memberId:"batou", pass:null},
+      {username:"togusa", memberId:"togusa", pass:null},
+      {username:"rook", memberId:"rook", pass:null},
+      {username:"vela", memberId:"vela", pass:null},
+      {username:"sable", memberId:"sable", pass:null},
+      {username:"patch", memberId:"patch", pass:null},
+      {username:"miles", memberId:"miles", pass:null},
+      {username:"scott", memberId:"scott", pass:null}
+    ]
   };
 }
 
@@ -1095,11 +1156,18 @@ function esc(s){
     .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 }
 function $(id){ return document.getElementById(id); }
-function memberById(id){
-  for(var i=0;i<MEMBERS.length;i++) if(MEMBERS[i].id === id) return MEMBERS[i];
-  return MEMBERS[0];
+function allMembers(){
+  var del = (typeof state !== "undefined" && state && state.deletedIds) || [];
+  var base = MEMBERS.filter(function(m){ return del.indexOf(m.id) === -1; });
+  var custom = (typeof state !== "undefined" && state && state.customMembers) || [];
+  return base.concat(custom);
 }
-function realMembers(){ return MEMBERS.filter(function(m){ return !m.placeholder; }); }
+function memberById(id){
+  var all = allMembers();
+  for(var i=0;i<all.length;i++) if(all[i].id === id) return all[i];
+  return all[0];
+}
+function realMembers(){ return allMembers().filter(function(m){ return !m.placeholder; }); }
 function profOf(m){
   if(m.placeholder) return SEAT_PROFILE;
   var base = {headline:m.headline, mood:m.mood, moodFace:m.moodFace, about:m.about, meet:m.meet};
@@ -1208,8 +1276,10 @@ function showView(view, profileId){
   $("feedView").classList.toggle("hidden", view !== "feed");
   $("membersView").classList.toggle("hidden", view !== "members");
   $("profileView").classList.toggle("hidden", view !== "profile");
+  $("adminView").classList.toggle("hidden", view !== "admin");
   if(view === "feed") renderFeed();
   if(view === "members") renderMembers();
+  if(view === "admin") renderAdmin();
   if(view === "profile") renderProfile(profileId || currentProfileId);
   window.scrollTo(0,0);
 }
@@ -1221,6 +1291,7 @@ document.querySelectorAll("[data-nav]").forEach(function(a){
   });
 });
 function renderActAs(){
+  $("navAdmin").classList.toggle("hidden", state.actingId !== "david");
   var sel = $("actAsSelect");
   sel.innerHTML = realMembers().map(function(m){
     return '<option value="'+m.id+'"'+(m.id === state.actingId ? " selected" : "")+'>'+esc(m.name)+'</option>';
@@ -1244,7 +1315,7 @@ $("resetBtn").addEventListener("click", function(){
 $("searchBtn").addEventListener("click", function(){
   var q = $("searchInput").value.trim().toLowerCase();
   if(!q) return;
-  var hit = MEMBERS.filter(function(m){ return !m.placeholder && m.name.toLowerCase().indexOf(q) !== -1; })[0];
+  var hit = allMembers().filter(function(m){ return !m.placeholder && m.name.toLowerCase().indexOf(q) !== -1; })[0];
   if(hit) showView("profile", hit.id); else showView("members");
 });
 </script>
@@ -1406,7 +1477,7 @@ $("compPostBtn").addEventListener("click", function(){
 
 /* ================= MEMBERS ================= */
 function renderMembers(){
-  $("memberGrid").innerHTML = MEMBERS.map(function(m){
+  $("memberGrid").innerHTML = allMembers().map(function(m){
     if(m.placeholder){
       return '<div class="member-card open">' + avatarHTML(m,"") +
         '<div class="m-name">Open Seat</div>' +
@@ -1517,7 +1588,7 @@ function renderProfile(id){
     return '<img src="'+esc(src)+'" alt="Photo from '+esc(m.name)+'" loading="lazy">';
   }).join("") : '<div class="song-note" style="padding:4px">No photos yet. The gallery fills up fast once someone starts posting.</div>';
 
-  var others = MEMBERS.filter(function(x){ return x.id !== m.id; });
+  var others = allMembers().filter(function(x){ return x.id !== m.id; });
   var reals = others.filter(function(x){ return !x.placeholder; });
   var seats = others.filter(function(x){ return x.placeholder; });
   var top = reals.concat(seats).slice(0, 8);
@@ -1694,6 +1765,130 @@ $("codeSaveBtn").addEventListener("click", function(){
   var bg = $("spaceBg");
   if(bg) bg.style.transform = "scale(1.08)";
 })();
+
+/* ================= ACCOUNTS =================
+   Demo auth: username and password, nothing else. Passwords
+   live in this browser (localStorage) until the database
+   lands; team profiles start passwordless and are claimed by
+   signing in and setting one. */
+$("gateForm").addEventListener("submit", function(e){ e.preventDefault(); });
+function findAccount(username){
+  username = (username || "").trim().toLowerCase();
+  return (state.accounts || []).filter(function(a){ return a.username === username; })[0] || null;
+}
+function enterAs(memberId){
+  state.actingId = memberId;
+  saveState();
+  sessionStorage.setItem(SS_GATE, "1");
+  showApp();
+}
+function makeMember(id, name){
+  var colors = ["#274156","#6b4a1b","#123d2a","#0f4c5c","#4a4a52","#7a4a12","#1b2a6b","#365a3d"];
+  return {id:id, name:name, theme:"theme-classic", color:colors[Math.floor(Math.random()*colors.length)], photo:null,
+    headline:"\"New in the circle.\"", mood:"New here", moodFace:":)", basics:["","",""], since:"November 2026", song:null,
+    interests:{}, details:{"Here for:":"The circle","Role:":"Member","Member since:":"November 2026"},
+    about:"", meet:"", gallery:[], video:null, custom:true};
+}
+function createAccount(username, name, pass){
+  username = (username || "").trim().toLowerCase();
+  if(!/^[a-z0-9_]{3,20}$/.test(username)) return "Username: 3 to 20 letters, numbers or underscores.";
+  if(findAccount(username)) return "That username is taken.";
+  if(!(name || "").trim()) return "Give the profile a display name.";
+  if((pass || "").length < 4) return "Password needs at least 4 characters.";
+  var id = "u" + Date.now();
+  state.customMembers.push(makeMember(id, name.trim()));
+  state.accounts.push({username:username, memberId:id, pass:pass});
+  saveState();
+  return null;
+}
+$("showSignIn").addEventListener("click", function(){
+  $("signInBox").classList.toggle("hidden");
+  $("signUpBox").classList.add("hidden");
+});
+$("showSignUp").addEventListener("click", function(){
+  $("signUpBox").classList.toggle("hidden");
+  $("signInBox").classList.add("hidden");
+});
+$("siGo").addEventListener("click", function(){
+  var acc = findAccount($("siUser").value);
+  if(!acc){ $("siErr").textContent = "No account with that username yet. Sign up first, it takes ten seconds."; return; }
+  if(acc.pass === null || acc.pass === undefined){
+    if($("siPass").value.length < 4){ $("siErr").textContent = "Set your password: at least 4 characters."; return; }
+    acc.pass = $("siPass").value;
+    saveState();
+    enterAs(acc.memberId);
+    return;
+  }
+  if(acc.pass === $("siPass").value){ enterAs(acc.memberId); }
+  else { $("siErr").textContent = "Wrong password."; }
+});
+$("suGo").addEventListener("click", function(){
+  var err = createAccount($("suUser").value, $("suName").value, $("suPass").value);
+  if(err){ $("suErr").textContent = err; return; }
+  var acc = findAccount($("suUser").value);
+  enterAs(acc.memberId);
+});
+
+/* ================= ADMIN ================= */
+function deleteMember(id){
+  var m = memberById(id);
+  if(m.custom){ state.customMembers = state.customMembers.filter(function(x){ return x.id !== id; }); }
+  else { state.deletedIds.push(id); }
+  state.accounts = state.accounts.filter(function(a){ return a.memberId !== id; });
+  state.posts = state.posts.filter(function(p){ return p.authorId !== id; });
+  state.posts.forEach(function(p){
+    p.comments = p.comments.filter(function(c){ return c.authorId !== id; });
+    if(p.poll) p.poll.options.forEach(function(o){ o.votes = o.votes.filter(function(v){ return v !== id; }); });
+  });
+  delete state.walls[id];
+  Object.keys(state.walls).forEach(function(k){ state.walls[k] = state.walls[k].filter(function(w){ return w.authorId !== id; }); });
+  if(state.edits) delete state.edits[id];
+  if(state.actingId === id) state.actingId = "david";
+  saveState();
+}
+function renderAdmin(){
+  if(state.actingId !== "david"){
+    $("adminAccounts").innerHTML = "The admin chair belongs to the Chief.";
+    $("adminPosts").innerHTML = "";
+    return;
+  }
+  $("adminAccounts").innerHTML = allMembers().map(function(m){
+    var acc = (state.accounts || []).filter(function(a){ return a.memberId === m.id; })[0];
+    var un = acc ? acc.username : "(none)";
+    var pw = acc && acc.pass ? "set" : "not set";
+    return '<div class="admin-row"><span class="admin-who">' + avatarHTML(m, "") + '<span><b>' + esc(m.name) + '</b><br><span class="song-note">@' + esc(un) + ' · password ' + pw + (m.custom ? ' · signed up' : ' · team') + '</span></span></span>' +
+      '<span class="admin-btns"><button type="button" class="btn small" data-admin-act="' + m.id + '">Act as</button> ' +
+      '<button type="button" class="btn small" data-admin-pass="' + m.id + '">Set password</button> ' +
+      (m.id !== "david" ? '<button type="button" class="btn small" data-admin-del="' + m.id + '">Delete</button>' : '') + '</span></div>';
+  }).join("");
+  $("adminPosts").innerHTML = state.posts.map(function(p){
+    var a = memberById(p.authorId);
+    var snip = p.type === "poll" ? ("Poll: " + p.poll.q) : (p.text || "(" + p.type + ")");
+    return '<div class="admin-row"><span>' + esc(a ? a.name : "?") + ': ' + esc(snip.slice(0, 80)) + '</span><button type="button" class="btn small" data-admin-delpost="' + p.id + '">Delete</button></div>';
+  }).join("") || "No posts yet.";
+}
+$("adminView").addEventListener("click", function(e){
+  var t = e.target;
+  var act = t.getAttribute("data-admin-act"), pw = t.getAttribute("data-admin-pass"),
+      del = t.getAttribute("data-admin-del"), dp = t.getAttribute("data-admin-delpost");
+  if(act){ state.actingId = act; saveState(); renderActAs(); showView("feed"); }
+  if(pw){
+    var np = prompt("New password for " + memberById(pw).name + ":");
+    if(np !== null && np !== ""){
+      var acc = (state.accounts || []).filter(function(a){ return a.memberId === pw; })[0];
+      if(!acc){ acc = {username: pw, memberId: pw, pass: null}; state.accounts.push(acc); }
+      acc.pass = np; saveState(); renderAdmin();
+    }
+  }
+  if(del && confirm("Delete " + memberById(del).name + " and all their posts, wall and comments?")){ deleteMember(del); renderActAs(); renderAdmin(); }
+  if(dp && confirm("Delete this post?")){ state.posts = state.posts.filter(function(p){ return p.id !== dp; }); saveState(); renderAdmin(); }
+});
+$("adCreate").addEventListener("click", function(){
+  var err = createAccount($("adUser").value, $("adName").value, $("adPass").value);
+  if(err){ alert(err); return; }
+  $("adUser").value = ""; $("adName").value = ""; $("adPass").value = "";
+  renderActAs(); renderAdmin();
+});
 
 /* ================= INIT ================= */
 (function(){

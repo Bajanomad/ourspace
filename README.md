@@ -235,3 +235,16 @@ pipe separated nav, and the extended network banner (rewritten here as
   players are the later plan. Saved state resets to the new
   roster (storage key v3). Miles and Scott portraits are
   generated stand-ins until the real men hand over photos.
+- 2026-11-19: v12 makes it functional, David's order: he makes
+  the profiles himself now. Sign up and sign in with a username
+  and a password, nothing else asked, no email, no phone. Team
+  profiles start passwordless and are claimed by signing in and
+  setting a password. New accounts become real members with the
+  standard template. The gate still opens with the cool bar, so
+  nobody is locked out of the demo. Admin panel (visible when
+  acting as David): create accounts for anyone, act as any
+  member, set or reset passwords, delete members (with their
+  posts, walls and comments) and delete any post. Demo honesty:
+  passwords live in this browser until the real database and
+  security land later, which is also when picture uploads get
+  their permanent home. Storage key v4.
