@@ -201,3 +201,11 @@ pipe separated nav, and the extended network banner (rewritten here as
   gate is now fixed to the screen itself, exactly centered top
   to bottom, no scroll, no bounce, and it auto fits any device
   (responsive). The gate look did not change at all.
+- 2026-11-18: v9 is David's theme rule: the space theme belongs
+  to the loading/gate page only. Once you log in, the ENTIRE
+  website wears the theme in use (yours on the feed and members
+  pages, the owner's on their profile): shell, cards, buttons,
+  page background, everything. Themes are picked from the grid
+  (12 built in); the code boxes stay as an option, not the main
+  road. David's profile song is OFF at his order (the song box
+  hides when a member has no song); music gets worked on later.
