@@ -1,80 +1,150 @@
-# davidspace
+# OurSpace
 
-David's personal MySpace, rebuilt by hand in the classic 2005-2008 style.
-One profile page for David and his close friends, scattered across Mexico,
-the United States and Europe. No ads, no algorithm, no strangers. Just us.
+A closed, invite-only social network for a small circle: David, his close
+friends, his family, and the few people they let in. At most about 50
+people, ever. No public anything, no groups, no classifieds, no ads, no
+algorithm. Just profiles, a shared feed, and each other.
 
-Live form: a static site, meant to sit at the root of a GitHub Pages repo.
+Every member gets a profile built from ONE standard template, modeled
+box for box on the classic MySpace profile (2005 to 2008): photo block
+with headline and mood, Contacting box, Interests and Details tables,
+blurbs, photo gallery, featured video, a profile song, Top Friends, and
+a comments wall. Personalization is a theme layer over those same
+boxes: colors, fonts, background, motifs, and a song. Nobody starts
+from a blank page.
+
+Live form: a static site, meant to sit at the root of a GitHub Pages
+repo. Demo build: David and his friends are stress testing it to decide
+what the real version needs.
 
 ## What is in here
 
-- `index.html` - the profile page structure (classic two-column layout).
-- `style.css` - the classic theme: dark blue top bar, light blue section
-  bars, orange blurb heads, interests and details tables, tiny Verdana.
-- `app.js` - all data and plumbing: friends list, profile defaults, seed
-  comments and bulletins, localStorage persistence, the owner gate.
+- `index.html` - everything: markup, CSS (base classic theme plus the
+  member themes), and all the JavaScript. One file on purpose, so the
+  demo is easy to tweak and re-deploy.
+- `music/` - three placeholder profile song loops, synthesized with
+  ffmpeg: `david-loop.mp3` (Mexican hip hop slot), `glenn-loop.mp3`
+  (old school disco slot), `susan-loop.mp3` (pop slot). They prove the
+  player plumbing and get replaced with real tracks later.
+
+## Demo invite code
+
+`ourspace2026`
+
+It is printed on the gate screen on purpose, same pattern as the family
+demo password. The gate is a friendly door for the demo, not security.
+The real version gets real member accounts and server-side auth.
 
 ## How it works
 
 - Pure static files. No build step, no server, no database. Open
   `index.html` or serve the folder and it runs.
-- The layout follows the classic profile: left column has the photo,
-  headline, mood, contact box, interests and details tables. Right column
-  has the extended network banner, the blurbs (About me, Who I'd like to
-  meet), bulletins, the Friend Space with the Top 8, and the comments wall.
-- Comments and bulletins are stored in the visitor's browser
-  (localStorage keys `davidspace.comments`, `davidspace.bulletins`).
-  First visit seeds them with samples from Miles and Caleb. Anything a
-  visitor posts lives only in that browser. That is fine for v1; a real
-  shared wall needs a backend, which is a later version's problem.
-- Headline, mood and blurbs are editable in the page and saved to
-  localStorage (`davidspace.profile`).
+- The gate asks for the invite code, then the app opens on the Feed.
+- Feed (home): every member's posts, newest first, with author and
+  time. Post types: text, photo (image link, or an upload that gets
+  shrunk in the browser and stored as a data URI), video (YouTube link
+  or a direct .mp4 link, embedded), and poll (question plus 2 to 4
+  options, members vote, live result bars, vote can be changed). Every
+  post takes comments.
+- Act as: a switcher in the top bar lets you post, comment and vote as
+  any member. That is the stress test tool: be David, be Glenn, be
+  Susan, see what breaks.
+- Profiles: click any name or avatar. The profile song tries to start
+  when a profile opens; if the browser blocks autoplay, the song box
+  shows a Play button and a note. Pause control lives in the song box.
+- Members page: the whole circle, plus Open Seat cards. An open seat
+  opens the standard template with starter text, so a new member can
+  see exactly what they start from before they make it theirs.
+- Edit my page: when you are acting as the member whose profile you are
+  viewing, an edit panel appears (headline, mood, mood face, About me,
+  Who I'd like to meet). Edits persist.
+- Persistence: everything lives in localStorage under the versioned
+  key `ourspace.v2.state`, seeded on first run (seed timestamps are
+  relative, so the demo always looks fresh). "Reset demo data" in the
+  top bar wipes this browser back to the seeds.
 
-## Owner mode
+## Members and themes (seeded)
 
-- Scroll to the bottom bar and unlock with the owner password.
-  Demo password: `davidspace2026`.
-- This is a client-side demo gate, the same pattern as the Moreno family
-  demo. It keeps casual visitors from editing, nothing more. Production
-  would use real accounts and server-side auth.
-- Owner mode unlocks: Edit Profile (headline, mood, mood face, both
-  blurbs), posting bulletins, and deleting comments or bulletins.
+- David: Matrix theme. Black background, neon green and bright orange,
+  mono and display fonts. Song slot labeled Mexican hip hop.
+- Glenn: Harley theme. Black and chrome, bright orange, sugar skull
+  motif in the section bars. Song slot labeled old school disco.
+- Susan: Glitter theme. Pastel pink and lavender, sparkle motif in the
+  section bars, friendly rounded type. Song slot labeled pop.
+- Three Open Seats on the classic default theme, waiting for people.
 
-## How to edit things in code
+## How to add a member
 
-- Friends: edit the `FRIENDS` array at the top of `app.js`. Each friend
-  has a name, location, avatar color, a `top` flag for the Top 8, and a
-  short note for the full friends list. Entries with
-  `placeholder: true` render as open seats.
-- Profile defaults (headline, mood, blurbs): `DEFAULT_PROFILE` in
-  `app.js`. Note: anyone who already visited keeps their localStorage
-  copy, so code changes show for new visitors.
-- Interests and details tables: plain HTML in `index.html`.
-- Seed comments and bulletins: `seedComments()` and `seedBulletins()` in
-  `app.js`. Same localStorage caveat as above.
-- To wipe your own browser back to the seeds, clear localStorage for the
-  site (browser dev tools, Application, Local Storage, delete the
-  `davidspace.*` keys).
+1. Add an entry to the `MEMBERS` array near the top of the script in
+   `index.html`: id, name, theme class, avatar color, headline, mood,
+   basics lines, interests, details, about, meet, gallery image links,
+   a featured video (or null), and a song ({file, title, label}) or
+   null. Copy an existing member and change the words.
+2. Drop their song file in `music/` and point `song.file` at it.
+3. Optionally seed their wall in `seedState()` under `walls`.
+4. Note: existing browsers keep their saved state, so a new member
+   shows up for them after a Reset demo data. Fresh visitors get the
+   new seeds right away.
 
-## Placeholders in v1
+## How to add a theme
 
-- Miles and Caleb are real. Tom is the traditional first friend. The
-  other five Top 8 slots are open seats waiting for real friends.
-- The profile photo is a styled initial block, not a real photo.
-- Nav links, contact box actions and "View My: Pics | Videos" are
-  decorative for now; a few jump to the comments or friends sections.
-- Comments are per-browser, not shared between visitors yet.
+1. Add a `.theme-yourname` block in the CSS next to the other themes
+   and set the same variables: page and content backgrounds, section
+   bar colors, table label and cell colors, border, link, accent,
+   text, muted, button background, body font, name font, avatar color.
+2. Optional: a motif line like the existing ones (a character appended
+   to section bars), for example `.theme-yourname .bar::after`.
+3. Set the member's `theme` field to `theme-yourname`.
+   The boxes never change. Only the layer does. That is the rule.
+
+## Layout accuracy notes
+
+The base template follows the era's own stylesheet values, dug up from
+archived copies of myspace.css and profile.css and from faithful
+recreations of Tom's profile: Verdana at 8pt base size, 800px page,
+page background #e5e5e5, section header bars #b1d0f0 with dark blue
+text, Interests and Details label cells #b1d0f0 (label text #336699),
+value cells #d5e8fb, blurb heads ("About me:", "Who I'd like to
+meet:") in #ff6600 bold, buttons in #d5e8fb with a groove border, the
+pipe separated nav, and the extended network banner (rewritten here as
+"in your circle", because this network is closed).
+
+## Known limits
+
+- localStorage is per browser, so the demo is one-device for now:
+  posts made on David's phone do not appear on Glenn's phone. A shared
+  backend (real accounts, a real database, real photo storage) is the
+  later version's job, once the stress test settles what we actually
+  need.
+- Storage will fill up eventually, photos first. David knows and is
+  dealing with it later, on purpose.
+- The invite gate and the act-as switcher are demo tools, not
+  security. Anyone with the demo link and the printed code can act as
+  anyone. Fine for a stress test among friends, not fine for launch.
+- Seeded photos are placeholder images from picsum.photos, and seeded
+  videos are a public sample clip and a well known YouTube video. Real
+  member media replaces them.
+- Profile photos are initial blocks for now, same as v1.
 
 ## Decisions log
 
-- 2026-11-18: Built v1 as one static page after researching classic
-  MySpace profiles (two columns, 13 standard components, Top 8, comment
-  wall, bulletins that went out to all friends). Chose the default blue
-  and white theme over a glitter layout: era-accurate, but clean and
-  readable on a phone.
-- 2026-11-18: Reused the family demo's plumbing patterns: data as plain
-  JS arrays, string-built rendering, and the client-side demo password
-  gate, here used as an owner-only edit lock instead of a full login.
-- 2026-11-18: Added localStorage persistence (the family demo kept posts
-  in memory only) so comments, bulletins and profile edits survive a
-  refresh. Kept everything in three files plus this README, on purpose.
+- 2026-11-18: v1 shipped as "davidspace", one profile page for David
+  in the classic style, with a Top 8 and a comments wall. David's
+  verdict: pretty cool, but rough, and not what MySpace actually
+  looked like. He also reframed the whole idea: not a tribute page,
+  a closed social network for his people.
+- 2026-11-18: Renamed to OurSpace (David's pick: "it is OUR space").
+  The name is product-wide: title, gate, header, URL lines.
+- 2026-11-18: v2 rebuilt around the accurate layout system (values
+  above) and the template rule: one standard profile template for
+  everyone, personalization as a theme layer only. David's Matrix
+  page, Glenn's Harley page and Susan's glitter page are the proof.
+- 2026-11-18: Dropped from v1's framing: public network language,
+  groups and classifieds dressing, the single-profile focus. Added:
+  the shared feed, polls, photo upload, member switching (Act as),
+  per-member themes, and the Open Seat template preview.
+- 2026-11-18: Kept from v1 and the family demo: data as plain arrays,
+  string-built rendering, the demo gate with the code printed on it,
+  localStorage persistence (now one versioned state key instead of
+  three separate keys).
+- 2026-11-18 (deployment note): GitHub Pages serves this from the repo root. The push tooling moves text files only, so in the deployed copy the three placeholder songs are inlined into index.html as data URIs; the music/ folder in the source workspace remains the canonical audio for a future host.
