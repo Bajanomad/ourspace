@@ -209,3 +209,8 @@ pipe separated nav, and the extended network banner (rewritten here as
   (12 built in); the code boxes stay as an option, not the main
   road. David's profile song is OFF at his order (the song box
   hides when a member has no song); music gets worked on later.
+- 2026-11-18: David's call: "Version eight was my favorite.
+  Let's keep that." The live site is rolled back to v8 (space
+  shell throughout, gate pinned, his song in place). The v9
+  whole-site theming build stays in the repo history as
+  v9.html only; v8 is the keeper unless he says otherwise.
