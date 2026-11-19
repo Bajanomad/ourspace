@@ -177,3 +177,11 @@ pipe separated nav, and the extended network banner (rewritten here as
   cells, larger type and tap targets everywhere, and parallax:
   two star layers plus the vista itself drift at different rates
   over the scroll. The word David was reaching for is intuitive.
+- 2026-11-18: v6 is the three column profile, David's layout: a
+  slim identity rail on the left (photo at the top, name, details
+  under it; birthday and area matter, age does not, we all know
+  each other), the talk in the middle (blurbs, a quick post box on
+  your own page, latest posts, friends, the wall), and on the far
+  right the media rail, his doom scroll bar: profile song,
+  featured video and photos in their own sticky scrolling column.
+  The page widens to 1180px to hold it; on a phone it stacks.

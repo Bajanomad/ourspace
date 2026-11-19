@@ -376,6 +376,23 @@ table.info td{background:var(--cellbg)}
   .top-grid{grid-template-columns:repeat(2,1fr)}
   .searchbox{display:none}
 }
+
+/* ============================================================
+   v6 THREE COLUMN PROFILE: identity rail on the left (photo,
+   name, details), talk in the middle (blurbs, posts, wall),
+   and the media rail on the right: song, videos, photos in
+   their own scrolling column. The doom scroll, domesticated.
+   ============================================================ */
+.wrap{width:1180px}
+.profile-cols{grid-template-columns:250px minmax(0,1fr) 310px;gap:18px}
+.col-media{position:sticky;top:14px;max-height:calc(100vh - 28px);overflow-y:auto;padding:2px 4px 2px 2px;scrollbar-width:thin}
+.col-media::-webkit-scrollbar{width:6px}
+.col-media::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.media-rail-head{font-family:Orbitron,Verdana,sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:2px 0 10px}
+@media (max-width:1020px){
+  .profile-cols{grid-template-columns:1fr}
+  .col-media{position:static;max-height:none;overflow:visible}
+}
 </style>
 </head>
 <body>
@@ -541,7 +558,7 @@ table.info td{background:var(--cellbg)}
             </div>
           </div>
 
-          <div class="col-right">
+          <div class="col-center">
             <div class="network-banner" id="pBanner"></div>
 
             <div class="edit-panel hidden" id="editPanel">
@@ -577,12 +594,11 @@ table.info td{background:var(--cellbg)}
               </div>
             </div>
 
-            <div class="box">
-              <div class="bar">Profile Song</div>
-              <div class="body song-row">
-                <button class="btn small" id="songBtn" type="button">Play</button>
-                <span><b id="pSongTitle"></b><br><span class="song-note" id="pSongLabel"></span></span>
-                <span class="song-note" id="songNote"></span>
+            <div class="box hidden" id="quickPostBox">
+              <div class="bar">Say Something</div>
+              <div class="body">
+                <textarea id="quickPostText" rows="3" placeholder="Talk to the circle from your own page..." style="width:100%"></textarea>
+                <div style="margin-top:6px"><button type="button" class="btn" id="quickPostBtn">Post</button></div>
               </div>
             </div>
 
@@ -604,16 +620,6 @@ table.info td{background:var(--cellbg)}
               <div class="body" id="pLatest"></div>
             </div>
 
-            <div class="box" id="pVideoBox">
-              <div class="bar" id="pVideoTitle">Featured Video</div>
-              <div class="body"><div class="p-vid" id="pVideoWrap"></div></div>
-            </div>
-
-            <div class="box" id="pGalleryBox">
-              <div class="bar" id="pGalleryTitle">Photos</div>
-              <div class="gallery-grid" id="pGallery"></div>
-            </div>
-
             <div class="box">
               <div class="bar" id="pFriendsTitle">Friend Space</div>
               <p class="body friend-count" id="pFriendCount"></p>
@@ -630,6 +636,29 @@ table.info td{background:var(--cellbg)}
                 <textarea id="wallText" rows="3" placeholder="Leave some love..."></textarea>
                 <div style="margin-top:5px"><button type="submit" class="btn">Post Comment</button></div>
               </form>
+            </div>
+          </div>
+
+          <div class="col-right col-media">
+            <div class="media-rail-head">The Good Stuff</div>
+
+            <div class="box">
+              <div class="bar">Profile Song</div>
+              <div class="body song-row">
+                <button class="btn small" id="songBtn" type="button">Play</button>
+                <span><b id="pSongTitle"></b><br><span class="song-note" id="pSongLabel"></span></span>
+                <span class="song-note" id="songNote"></span>
+              </div>
+            </div>
+
+            <div class="box" id="pVideoBox">
+              <div class="bar" id="pVideoTitle">Featured Video</div>
+              <div class="body"><div class="p-vid" id="pVideoWrap"></div></div>
+            </div>
+
+            <div class="box" id="pGalleryBox">
+              <div class="bar" id="pGalleryTitle">Photos</div>
+              <div class="gallery-grid" id="pGallery"></div>
             </div>
           </div>
 
@@ -1282,6 +1311,7 @@ function renderProfile(id){
 
   var isMine = state.actingId === m.id && !m.placeholder;
   $("editPanel").classList.toggle("hidden", !isMine);
+  $("quickPostBox").classList.toggle("hidden", !isMine);
   if(isMine){
     $("editHeadline").value = prof.headline;
     $("editMood").value = prof.mood;
@@ -1313,6 +1343,14 @@ function renderProfile(id){
   applyCustom(m, prof);
   loadSong(m.placeholder ? SEAT_PROFILE : m);
 }
+$("quickPostBtn").addEventListener("click", function(){
+  var text = $("quickPostText").value.trim();
+  if(!text) return;
+  state.posts.push({id:"p" + Date.now(), authorId: state.actingId, type:"text", ts: Date.now(), text: text, comments: []});
+  saveState();
+  $("quickPostText").value = "";
+  renderProfile(currentProfileId);
+});
 $("wallForm").addEventListener("submit", function(e){
   e.preventDefault();
   var text = $("wallText").value.trim();
